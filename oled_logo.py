@@ -57,8 +57,9 @@ logo = (
 i2c = I2C(-1, Pin(5), Pin(4))
 display = ssd1306.SSD1306_I2C(64, 48, i2c)
 display.fill(True)
-for y in range(48):
-    for x in range(48):
-        display.pixel(8 + x, y, not logo[y * 6 + x // 8] & (1<<(7 - x % 8)))
+for x in range(48):
+    for y in range(48):
+	## Normally: pixel(x, y, on/off)
+        display.pixel(8 + y, x, not logo[y * 6 + x // 8] & (1<<(7 - x % 8)))
 display.show()
 

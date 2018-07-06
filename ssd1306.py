@@ -1,4 +1,5 @@
-# MicroPython SSD1306 OLED driver, I2C and SPI interfaces
+## MicroPython SSD1306 OLED driver, I2C and SPI interfaces
+## Source: https://github.com/adafruit/micropython-adafruit-ssd1306/blob/master/ssd1306.py 
 
 import time
 import framebuf
