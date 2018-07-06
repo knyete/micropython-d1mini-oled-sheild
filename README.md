@@ -4,7 +4,9 @@
 
 ### OLED Shield
 
-![oled_v1.1.0_2.jpg](./oled_v1.1.0_1.jpg)
+![IMG_20160617_112945.jpg](./IMG_20160617_112945.jpg)
+
+https://forum.micropython.org/viewtopic.php?t=1637#p11474
 
 https://wiki.wemos.cc/products:retired:oled_shield_v1.1.0
 
