@@ -4,7 +4,7 @@
 
 ### OLED Shield
 
-![oled_v1.1.0_2.jpg](./oled_v1.1.0_2.jpg)
+![oled_v1.1.0_2.jpg](./oled_v1.1.0_1.jpg)
 
 https://wiki.wemos.cc/products:retired:oled_shield_v1.1.0
 
