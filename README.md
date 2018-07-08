@@ -20,3 +20,6 @@ https://docs.micropython.org/en/latest/esp8266/library/machine.I2C.html
 
 (Then restart the MCU.)
 
+https://micropython-on-wemos-d1-mini.readthedocs.io/en/latest/shields.html#oled
+
+
