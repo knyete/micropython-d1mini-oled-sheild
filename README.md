@@ -22,4 +22,34 @@ https://docs.micropython.org/en/latest/esp8266/library/machine.I2C.html
 
 https://micropython-on-wemos-d1-mini.readthedocs.io/en/latest/shields.html#oled
 
+### DHT Shield
+
+https://micropython-on-wemos-d1-mini.readthedocs.io/en/latest/shields.html#dht-and-dht-pro
+
+### Wifi
+
+https://docs.micropython.org/en/latest/esp8266/esp8266/tutorial/network_basics.html
+
+https://micropython-on-wemos-d1-mini.readthedocs.io/en/latest/basics.html#network
+
+### MQTT
+
+https://github.com/micropython/micropython-lib/tree/master/umqtt.simple
+
+https://mosquitto.org/
+
+`sudo apt-get install mosquitto mosquitto-clients`
+
+`mosquitto_sub -t sensors/temperature -q 1`
+
+iPhone app: MQTTTester
+
+
+
+
+
+
+
+
+
 
