@@ -22,4 +22,8 @@ https://docs.micropython.org/en/latest/esp8266/library/machine.I2C.html
 
 https://micropython-on-wemos-d1-mini.readthedocs.io/en/latest/shields.html#oled
 
+### SHT-30
+
+https://github.com/rsc1975/micropython-sht30/blob/master/sht30.py
+
 
