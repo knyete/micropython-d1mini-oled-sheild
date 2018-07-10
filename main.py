@@ -40,9 +40,9 @@ sleep(3)
 import mqtt_config
 from umqtt_simple import MQTTClient
 
-c = MQTTClient("umqtt_client", mqtt_config.SERVER)
+c = MQTTClient(mqtt_config.CLIENT_ID, mqtt_config.SERVER)
 c.connect()
-c.publish(mqtt_config.TOPIC, b"HELLO")
+c.publish(mqtt_config.TOPIC, b"TEMPERATURE SENSOR ONLINE")
 c.disconnect()
 
 ###################################################
@@ -54,8 +54,7 @@ while True:
 	sensor.measure()
 
 	c.connect()
-	c.publish(mqtt_config.TOPIC, "TEMP:%d" % sensor.temperature())
-	c.publish(mqtt_config.TOPIC, "HUMID:%d" % sensor.temperature())
+	c.publish(mqtt_config.TOPIC, str(sensor.temperature()))
 	c.disconnect()
 
 	display.fill(0)
@@ -65,7 +64,7 @@ while True:
 	display.text("%d" % sensor.humidity(), 0, 36)
 	display.show()
 
-	sleep(30)
+	sleep(60)
 
 
 
