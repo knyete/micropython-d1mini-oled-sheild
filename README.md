@@ -44,6 +44,13 @@ https://mosquitto.org/
 
 iPhone app: MQTTTester
 
+### Thermostat
+
+https://en.wikipedia.org/wiki/PID_controller
+
+https://github.com/B3AU/micropython/blob/master/PID.py
+
+https://github.com/micropython/micropython-lib/blob/master/umqtt.simple/example_sub_led.py
 
 
 
