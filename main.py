@@ -33,7 +33,7 @@ display.text('.' + ip[2], 0, 30)
 display.text('.' + ip[3], 0, 40)
 display.show()
 
-sleep(3)
+sleep(1)
 
 ###################################################
 
@@ -41,30 +41,26 @@ import mqtt_config
 from umqtt_simple import MQTTClient
 
 c = MQTTClient(mqtt_config.CLIENT_ID, mqtt_config.SERVER)
+c.set_last_will(b"sensors/status/" + mqtt_config.CLIENT_ID, "OFFLINE")
 c.connect()
-c.publish(mqtt_config.TOPIC, b"TEMPERATURE SENSOR ONLINE")
-c.disconnect()
+c.publish(b"sensors/status/" + mqtt_config.CLIENT_ID, b"ONLINE")
 
 ###################################################
 
-import dht
-sensor = dht.DHT11(Pin(2))
+from sht30 import SHT30
+sensor = SHT30()
 
 while True:
-	sensor.measure()
+        temperature, humidity = sensor.measure()
 
-	c.connect()
-	c.publish(mqtt_config.TOPIC, str(sensor.temperature()))
-	c.disconnect()
+	c.publish(b"sensors/temperature/" + mqtt_config.CLIENT_ID, str(temperature))
+	c.publish(b"sensors/humidity/" + mqtt_config.CLIENT_ID, str(humidity))
 
 	display.fill(0)
 	display.text("Temp:", 0, 0)
-	display.text("%dc" % sensor.temperature(), 0, 12) # ºc - doesn't work
+	display.text("%dc" % temperature, 0, 12) # ºc - doesn't work
 	display.text("Humid:", 0, 24)
-	display.text("%d" % sensor.humidity(), 0, 36)
+	display.text("%d" % humidity, 0, 36)
 	display.show()
 
-	sleep(60)
-
-
-
+	sleep(10 * 60)
