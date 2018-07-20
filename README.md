@@ -1,5 +1,31 @@
 # MicroPython
 
+## Install
+
+Give user access to /dev/ttyUSB0:
+
+`sudo usermod -a -G dialout $USER`
+
+### ESP32
+
+`pip3 install esptool`
+
+`python3 -m esptool --port /dev/ttyUSB0 erase_flash`
+
+`python3 -m esptool --chip esp32 --port /dev/ttyUSB0 write_flash -z 0x1000 ~/Downloads/esp32-20180511-v1.9.4.bin`
+
+`screen /dev/ttyUSB0 115200`
+
+`pip3 install mpfshell`
+
+`python3 -m mp.mpfshell`
+
+### ESP8266
+
+`python3 -m esptool --port /dev/ttyUSB0 erase_flash`
+
+`python3 -m esptool --port /dev/ttyUSB0 --baud 115200 write_flash 0 esp8266-20180511-v1.9.4.bin`
+
 ## Wemos D1 Mini
 
 ### OLED Shield
