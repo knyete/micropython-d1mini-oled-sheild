@@ -1,63 +1,58 @@
+from machine import I2C, Pin
 from time import sleep
-from machine import Pin
-
-sleep(1)
-
-###################################################
-
-import wifi_config
 import network
+import wifi_config
+import ssd1306
+from umqtt_simple import MQTTClient
+import mqtt_config
+
+i2c = I2C(-1, Pin(5), Pin(4))
+display = ssd1306.SSD1306_I2C(64, 48, i2c)
+text_buffer = []
+
+def display_print(text):
+        global text_buffer
+        text_buffer.append(text[0:8])
+        if len(text_buffer) > 5:
+                text_buffer.pop(0)
+        display.fill(0)
+        row = 0
+        for line in text_buffer:
+                display.text(line, 0, row)
+                row += 10
+        display.show()
+
+display_print('START')
+
 wifi = network.WLAN(network.STA_IF)
 
 if not wifi.isconnected():
 	wifi.active(True)
 	wifi.connect(wifi_config.NAME, wifi_config.PASSWORD)
 	while not wifi.isconnected():
-		sleep(1)
-
-blue_led = Pin(2, Pin.OUT)
-
-for i in range(3):
-	blue_led.on()
-	sleep(0.5)
-	blue_led.off()
-	sleep(0.5)
-
-###################################################
-
-import mqtt_config
-from umqtt_simple import MQTTClient
-
-c = MQTTClient(mqtt_config.CLIENT_ID, mqtt_config.SERVER)
-c.connect()
-c.publish(mqtt_config.TOPIC, b"THERMOSTAT ONLINE")
-c.disconnect()
-
-###################################################
-
-relay = Pin(4, Pin.OUT)
+		sleep(10)
 
 def rx(topic, msg):
-	try:
-		temp = int(msg)
-	except ValueError:
-		pass
-	else:
-		if temp > 22:
-			relay.off()
-			c.publish(mqtt_config.TOPIC, b"THERMOSTAT OFF")
-		elif temp < 18:
-			relay.on()
-			c.publish(mqtt_config.TOPIC, b"THERMOSTAT ON")
+        print((topic, msg))
+        display_print(msg)
 
-c.set_callback(rx)
-c.connect()
-c.subscribe(mqtt_config.TOPIC)
+mqtt = MQTTClient(mqtt_config.CLIENT_ID, mqtt_config.SERVER)
+mqtt.set_last_will(b"display/status/" + mqtt_config.CLIENT_ID, "OFFLINE")
+mqtt.set_callback(rx)
+mqtt.connect()
+mqtt.subscribe(b"#")
+mqtt.publish(b"display/status/" + mqtt_config.CLIENT_ID, b"ONLINE")
+
+blue_led = Pin(2, Pin.OUT)
+blue_led_state = 0
+blue_led.value(blue_led_state)
 
 try:
     while 1:
-        c.wait_msg()
+        mqtt.wait_msg()
+        blue_led_state += 1
+        blue_led_state %= 2
+        blue_led.value(blue_led_state)
+        
 finally:
-	c.disconnect()
-
-
+	mqtt.disconnect()
