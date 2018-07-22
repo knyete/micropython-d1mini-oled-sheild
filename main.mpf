@@ -1,7 +1,2 @@
 open ttyUSB0
-put wifi_config.py
-put umqtt_simple.py
-put mqtt_config.py
-put sht30.py
 put main.py
-
